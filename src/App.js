@@ -74,7 +74,7 @@ function DraggableList({ items }) {
   )
 
   return (
-    <div className={styles.content} style={{ height: items.length * 80 }}>
+    <div className={styles.content} >
       {springs.map(({ zIndex, shadow, x, scale }, i) => (
         <animated.div
           {...bind(i)}
@@ -92,15 +92,39 @@ function DraggableList({ items }) {
   )
 }
 
+const TOTAL_ITEMS = 25
+
+const getRandomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min);
+  //The maximum is exclusive and the minimum is inclusive
+}
+
+const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'X']
+const seeds = ['C', 'D', 'H', 'S']
+
+// url: "https://picsum.photos/60/84?random&" + i
+const initial = [...Array(TOTAL_ITEMS).keys()].map((i) => ({
+  id: 'id-' + (i + 1),
+  url: "/card-dnd/resources/"
+    + values[getRandomInt(0, values.length)]
+    + seeds[getRandomInt(0, seeds.length)]
+    + ".svg",
+  front: values[getRandomInt(0, values.length)]  + seeds[getRandomInt(0, seeds.length)],
+  chosen: false,
+  filtered: false,
+  selected: false,
+  content: values[getRandomInt(0, values.length)]  + seeds[getRandomInt(0, seeds.length)],
+}))
+
 export default function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container maxWidth={false} disableGutters={true}>
-          <div className="flex fill center">
-            <DraggableList items={'Lorem ipsum dolor sit'.split(' ')} />
-          </div>
+          <DraggableList items={'Lorem ipsum dolor sit'.split(' ')} />
         </Container>
       </ThemeProvider>
     </BrowserRouter>
