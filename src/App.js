@@ -10,7 +10,6 @@ import swap from 'lodash-move'
 
 import styles from './styles.module.css'
 
-
 const theme = createTheme({
   palette: {
     secondary: {
@@ -27,6 +26,9 @@ const theme = createTheme({
     },
   },
 })
+
+const cardHeight = 84
+const cardWidth = 60
 
 const fn =
   (order, active = false, originalIndex = 0, curIndex = 0, x = 0) =>
@@ -70,24 +72,29 @@ function DraggableList({ items }) {
     if (!active) {
       order.current = newOrder
     }
-  }
-  )
+  } )
 
   return (
     <div className={styles.content} >
-      {springs.map(({ zIndex, shadow, x, scale }, i) => (
-        <animated.div
-          {...bind(i)}
-          key={i}
-          style={{
-            zIndex,
-            boxShadow: shadow.to(s => `rgba(0, 0, 0, 0.15) 0px ${s}px ${2 * s}px 0px`),
-            x,
-            scale,
-          }}
-          children={items[i]}
-        />
-      ))}
+      {springs.map(({ zIndex, shadow, x, scale }, i) => {
+        const bimg = 'url("' + items[i].url + '")'
+        return (
+          <animated.div
+            {...bind(i)}
+            key={i}
+            style={{
+              backgroundImage: `url(${items[i].url})`,
+              backgroundRepeat: 'no-repeat',
+              zIndex,
+              boxShadow: shadow.to(s => `rgba(0, 0, 0, 0.15) 0px ${s}px ${2 * s}px 0px`),
+              x,
+              scale,
+            }}
+            id={items[i].id}
+          />
+        )
+      }
+      )}
     </div>
   )
 }
@@ -105,26 +112,28 @@ const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K',
 const seeds = ['C', 'D', 'H', 'S']
 
 // url: "https://picsum.photos/60/84?random&" + i
-const initial = [...Array(TOTAL_ITEMS).keys()].map((i) => ({
-  id: 'id-' + (i + 1),
-  url: "/card-dnd/resources/"
-    + values[getRandomInt(0, values.length)]
-    + seeds[getRandomInt(0, seeds.length)]
-    + ".svg",
-  front: values[getRandomInt(0, values.length)]  + seeds[getRandomInt(0, seeds.length)],
-  chosen: false,
-  filtered: false,
-  selected: false,
-  content: values[getRandomInt(0, values.length)]  + seeds[getRandomInt(0, seeds.length)],
-}))
+const initial = [...Array(TOTAL_ITEMS).keys()].map((i) => {
+  const value = values[getRandomInt(0, values.length)]
+  const seed = (value === 'X') ? 'B' : seeds[getRandomInt(0, seeds.length)]
+  return ({
+    id: 'id-' + i,
+    url: "/gesturespring/resources/" + value + seed + ".svg",
+    front: value + seed,
+    selected: false,
+    value: i,
+    back: 'BB', //fake
+  })
+})
 
 export default function App() {
+  const [cards, setCards] = useState(initial)
+
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container maxWidth={false} disableGutters={true}>
-          <DraggableList items={'Lorem ipsum dolor sit'.split(' ')} />
+          <DraggableList items={cards} />
         </Container>
       </ThemeProvider>
     </BrowserRouter>
