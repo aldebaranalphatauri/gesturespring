@@ -68,7 +68,13 @@ function DraggableList({ items }) {
   }) => {
     if (tap) {
       if (memo === undefined) {
-        console.log("tap for " + originalIndex)  
+        const animatedDiv = document.getElementById('animatedDiv' + originalIndex)
+        
+        console.log("tap for " + originalIndex)
+        console.log("tap for " + animatedDiv)
+
+        items[originalIndex].selected = !items[originalIndex].selected
+        animatedDiv.style.borderColor = items[originalIndex].selected ? 'blue' : 'transparent'
       }
 
       cancel()
@@ -121,9 +127,12 @@ function DraggableList({ items }) {
         <animated.div
           {...bind(i)}
           key={i}
+          id={'animatedDiv' + i}
           style={{
             backgroundImage: `url(${items[i].url})`,
             backgroundRepeat: 'no-repeat',
+            border: 'thick double',
+            borderColor: items[i].selected ? 'blue' : 'transparent',
             zIndex,
             boxShadow: shadow.to(s => `rgba(0, 0, 0, 0.15) 0px ${s}px ${2 * s}px 0px`),
             x,
