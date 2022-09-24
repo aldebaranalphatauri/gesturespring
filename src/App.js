@@ -4,7 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { indigo, green, blue, lightGreen } from '@mui/material/colors'
 import { Container, CssBaseline } from '@mui/material'
 import { useSprings, animated, config } from '@react-spring/web'
-import { useDrag } from '@use-gesture/react'
+import { useDrag, useGesture } from '@use-gesture/react'
 import clamp from 'lodash.clamp'
 import swap from 'lodash-move'
 
@@ -60,8 +60,21 @@ function DraggableList({ items }) {
   const bind = useDrag(({
     args: [originalIndex],
     active,
-    movement: [x]
+    movement: [x],
+    tap,
+    cancel,
+    startTime,
+    memo,
   }) => {
+    if (tap) {
+      if (memo === undefined) {
+        console.log("tap for " + originalIndex)  
+      }
+
+      cancel()
+      return startTime
+    }
+
     const curIndex = order.current.indexOf(originalIndex)
     const curRow = clamp(Math.round((curIndex * 80 + x) / 80), 0, items.length - 1)
     const newOrder = swap(order.current, curIndex, curRow)
@@ -72,28 +85,52 @@ function DraggableList({ items }) {
     if (!active) {
       order.current = newOrder
     }
-  } )
+
+    return startTime
+  },
+    { filterTaps: true }
+  )
+
+  /*
+  const bind = useGesture({
+    onDrag: ( {
+      args: [originalIndex],
+      active,
+      movement: [x]
+    }) => {
+      const curIndex = order.current.indexOf(originalIndex)
+      const curRow = clamp(Math.round((curIndex * 80 + x) / 80), 0, items.length - 1)
+      const newOrder = swap(order.current, curIndex, curRow)
+  
+      // Feed springs new style data, they'll animate the view without causing a single render
+      api.start(fn(newOrder, active, originalIndex, curIndex, x))
+  
+      if (!active) {
+        order.current = newOrder
+      }
+    },
+    onPointerDown: ({ event, ...sharedState }) => {
+      console.log('pointer down', event)
+    }
+  })
+  */
 
   return (
     <div className={styles.content} >
-      {springs.map(({ zIndex, shadow, x, scale }, i) => {
-        const bimg = 'url("' + items[i].url + '")'
-        return (
-          <animated.div
-            {...bind(i)}
-            key={i}
-            style={{
-              backgroundImage: `url(${items[i].url})`,
-              backgroundRepeat: 'no-repeat',
-              zIndex,
-              boxShadow: shadow.to(s => `rgba(0, 0, 0, 0.15) 0px ${s}px ${2 * s}px 0px`),
-              x,
-              scale,
-            }}
-            id={items[i].id}
-          />
-        )
-      }
+      {springs.map(({ zIndex, shadow, x, scale }, i) => (
+        <animated.div
+          {...bind(i)}
+          key={i}
+          style={{
+            backgroundImage: `url(${items[i].url})`,
+            backgroundRepeat: 'no-repeat',
+            zIndex,
+            boxShadow: shadow.to(s => `rgba(0, 0, 0, 0.15) 0px ${s}px ${2 * s}px 0px`),
+            x,
+            scale,
+          }}
+        />
+      )
       )}
     </div>
   )
