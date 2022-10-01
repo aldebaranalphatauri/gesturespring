@@ -61,8 +61,8 @@ export default function App() {
         <Container maxWidth={false} disableGutters={true}>
           <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} >
             <Routes>
-              <Route path="/" element={<CardReorder items={cards} order={order} />} />
-              <Route path="/viewpager" element={<Viewpager />} />
+              <Route path="/gesturespring" element={<CardReorder items={cards} order={order} />} />
+              <Route path="/gesturespring/viewpager" element={<Viewpager />} />
             </Routes>
           </Box>
         </Container>
