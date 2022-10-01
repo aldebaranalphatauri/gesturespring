@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/gesturespring/static/css/main.15eb6e7c.css",
-    "main.js": "/gesturespring/static/js/main.930b8b4e.js",
+    "main.js": "/gesturespring/static/js/main.d4d6b838.js",
     "static/js/787.ab7dfa8a.chunk.js": "/gesturespring/static/js/787.ab7dfa8a.chunk.js",
     "service-worker.js": "/gesturespring/service-worker.js",
     "index.html": "/gesturespring/index.html",
     "main.15eb6e7c.css.map": "/gesturespring/static/css/main.15eb6e7c.css.map",
-    "main.930b8b4e.js.map": "/gesturespring/static/js/main.930b8b4e.js.map",
+    "main.d4d6b838.js.map": "/gesturespring/static/js/main.d4d6b838.js.map",
     "787.ab7dfa8a.chunk.js.map": "/gesturespring/static/js/787.ab7dfa8a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.15eb6e7c.css",
-    "static/js/main.930b8b4e.js"
+    "static/js/main.d4d6b838.js"
   ]
 }
