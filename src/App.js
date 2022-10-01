@@ -55,14 +55,14 @@ export default function App() {
   const order = useRef(cards.map((_, index) => index))
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename='/gesturespring' >
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container maxWidth={false} disableGutters={true}>
           <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} >
             <Routes>
-              <Route path="/gesturespring" element={<CardReorder items={cards} order={order} />} />
-              <Route path="/gesturespring/viewpager" element={<Viewpager />} />
+              <Route path="/" element={<CardReorder items={cards} order={order} />} />
+              <Route path="/viewpager" element={<Viewpager />} />
             </Routes>
           </Box>
         </Container>
