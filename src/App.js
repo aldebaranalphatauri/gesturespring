@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { BrowserRouter, Routes, Route, useParams } from "react-router-dom"
+import { BrowserRouter, Routes, Route, useParams, Link } from "react-router-dom"
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { indigo, green, blue, lightGreen } from '@mui/material/colors'
 import { Container, CssBaseline, Box } from '@mui/material'
@@ -60,6 +60,18 @@ export default function App() {
         <CssBaseline />
         <Container maxWidth={false} disableGutters={true}>
           <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} >
+            <div>
+              <h1>Test Pages</h1>
+              <nav
+                style={{
+                  borderBottom: "solid 1px",
+                  paddingBottom: "1rem",
+                }}
+              >
+                <Link to="/">CardReorder</Link> |{" "}
+                <Link to="viewpager">Viewpager</Link>
+              </nav>
+            </div>
             <Routes>
               <Route path="/" element={<CardReorder items={cards} order={order} />} />
               <Route path="viewpager" element={<Viewpager />} />
