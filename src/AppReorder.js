@@ -2,9 +2,8 @@ import { useState, useRef } from 'react'
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom"
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { indigo, green, blue, lightGreen } from '@mui/material/colors'
-import { Container, CssBaseline, Box } from '@mui/material'
+import { Container, CssBaseline } from '@mui/material'
 import { CardReorder } from './components/CardReorder'
-import { Viewpager } from './components/Viewpager'
 
 const theme = createTheme({
   palette: {
@@ -51,20 +50,15 @@ const initial = [...Array(TOTAL_ITEMS).keys()].map((i) => {
 
 export default function App() {
   const [cards, setCards] = useState(initial)
-  // Store indicies as a local ref, this represents the item order
-  const order = useRef(cards.map((_, index) => index))
+   // Store indicies as a local ref, this represents the item order
+   const order = useRef(cards.map((_, index) => index))
 
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container maxWidth={false} disableGutters={true}>
-          <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} >
-            <Routes>
-              <Route path="/" element={<CardReorder items={cards} order={order} />} />
-              <Route path="/viewpager" element={<Viewpager />} />
-            </Routes>
-          </Box>
+          <CardReorder items={cards} order={order} />
         </Container>
       </ThemeProvider>
     </BrowserRouter>
