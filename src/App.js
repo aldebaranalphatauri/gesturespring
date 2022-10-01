@@ -62,7 +62,7 @@ export default function App() {
           <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} >
             <Routes>
               <Route path="/" element={<CardReorder items={cards} order={order} />} />
-              <Route path="/viewpager" element={<Viewpager />} />
+              <Route path="viewpager" element={<Viewpager />} />
             </Routes>
           </Box>
         </Container>
