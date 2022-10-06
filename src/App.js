@@ -5,6 +5,7 @@ import { indigo, green, blue, lightGreen } from '@mui/material/colors'
 import { Container, CssBaseline, Box } from '@mui/material'
 import { CardReorder } from './components/CardReorder'
 import { Viewpager } from './components/Viewpager'
+import { Lobby } from './components/Lobby'
 
 const theme = createTheme({
   palette: {
@@ -68,13 +69,15 @@ export default function App() {
                   paddingBottom: "1rem",
                 }}
               >
-                <Link to="/">CardReorder</Link> |{" "}
-                <Link to="viewpager">Viewpager</Link>
+                <Link to="/">CardReorder</Link> | {" "}
+                <Link to="viewpager">Viewpager</Link> | {" "}
+                <Link to="lobby">Lobby</Link>
               </nav>
             </div>
             <Routes>
               <Route path="/" element={<CardReorder items={cards} order={order} />} />
               <Route path="viewpager" element={<Viewpager />} />
+              <Route path="lobby" element={<Lobby />} />
             </Routes>
           </Box>
         </Container>
